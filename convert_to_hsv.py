@@ -48,11 +48,14 @@ def convert_dir(src_dir: str, dst_dir: str):
     print(f"Selesai: {src_dir} -> {dst_dir} | {saved}/{total} file tersimpan.")
 
 def main():
+    base_path = "/home/ilmannafi/Documents/project-pbl/resize-citra"
     for src, dst in PAIRS:
-        if not os.path.isdir(src):
-            print(f"[WARNING] Folder sumber tidak ditemukan: {src}")
+        src_full = os.path.join(base_path, src)
+        dst_full = os.path.join(base_path, dst)
+        if not os.path.isdir(src_full):
+            print(f"[WARNING] Folder sumber tidak ditemukan: {src_full}")
             continue
-        convert_dir(src, dst)
+        convert_dir(src_full, dst_full)
 
 if __name__ == "__main__":
     main()

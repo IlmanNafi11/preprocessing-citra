@@ -1,13 +1,28 @@
-from resize_images import resize_images
+import subprocess
+import sys
+import os
 
 def main():
-    # Resize images from sakit to sakit-resize
-    resize_images('sakit', 'sakit-resize')
+    venv_python = os.path.join(os.getcwd(), 'venv', 'bin', 'python')
+    if not os.path.exists(venv_python):
+        print("Virtual environment tidak ditemukan. Membuat venv...")
+        subprocess.run([sys.executable, '-m', 'venv', 'venv'])
+        subprocess.run([os.path.join('venv', 'bin', 'pip'), 'install', '-r', 'requirements.txt'])
+        venv_python = os.path.join(os.getcwd(), 'venv', 'bin', 'python')
 
-    # Resize images from sehat to sehat-resize
-    resize_images('sehat', 'sehat-resize')
+    # Jalankan rename_files.py
+    print("Menjalankan rename_files.py...")
+    subprocess.run([venv_python, 'rename_files.py'])
 
-    print("All images have been resized.")
+    # Jalankan resize_images.py
+    print("Menjalankan resize_images.py...")
+    subprocess.run([venv_python, 'resize_images.py'])
+
+    # Jalankan convert_to_hsv.py
+    print("Menjalankan convert_to_hsv.py...")
+    subprocess.run([venv_python, 'convert_to_hsv.py'])
+
+    print("Semua proses selesai.")
 
 if __name__ == "__main__":
     main()

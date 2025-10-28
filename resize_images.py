@@ -16,3 +16,11 @@ def resize_images(source_dir, dest_dir):
                 print(f"Resized and saved: {filename}")
             except Exception as e:
                 print(f"Error processing {filename}: {e}")
+
+def main():
+    base_path = "/home/ilmannafi/Documents/project-pbl/resize-citra"
+    resize_images(os.path.join(base_path, "sakit"), os.path.join(base_path, "sakit-resize"))
+    resize_images(os.path.join(base_path, "sehat"), os.path.join(base_path, "sehat-resize"))
+
+if __name__ == "__main__":
+    main()

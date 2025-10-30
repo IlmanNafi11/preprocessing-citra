@@ -1,11 +1,6 @@
 import os
 import cv2
-
-# Folder sumber → folder tujuan
-PAIRS = [
-    ("sakit-resize", "sakit-hsv"),
-    ("sehat-resize", "sehat-hsv"),
-]
+import numpy as np
 
 IMG_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff"}
 
@@ -16,12 +11,19 @@ def is_image_file(fname: str) -> bool:
     return os.path.splitext(fname)[1].lower() in IMG_EXTS
 
 def convert_one(in_path: str, out_path: str) -> bool:
-    bgr = cv2.imread(in_path, cv2.IMREAD_COLOR)
-    if bgr is None:
+    img_bgr = cv2.imread(in_path, cv2.IMREAD_COLOR)
+    if img_bgr is None:
         print(f"[SKIP] Tidak bisa baca: {in_path}")
         return False
-    hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-    ok = cv2.imwrite(out_path, hsv)
+    
+    img_hsv = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2HSV)
+    
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+    v_channel = img_hsv[:,:,2]
+    v_enhanced = clahe.apply(v_channel)
+    img_hsv[:,:,2] = v_enhanced
+    
+    ok = cv2.imwrite(out_path, img_hsv)
     if not ok:
         print(f"[FAIL] Gagal simpan: {out_path}")
     return ok
@@ -41,7 +43,7 @@ def convert_dir(src_dir: str, dst_dir: str):
             total += 1
             in_path = os.path.join(root, fname)
             base, _ = os.path.splitext(fname)
-            out_path = os.path.join(out_root, base + ".png")
+            out_path = os.path.join(out_root, base + ".jpg")
             if convert_one(in_path, out_path):
                 saved += 1
 
@@ -49,7 +51,12 @@ def convert_dir(src_dir: str, dst_dir: str):
 
 def main():
     base_path = "/home/ilmannafi/Documents/project-pbl/resize-citra"
-    for src, dst in PAIRS:
+    pairs = [
+        ("sakit-resize", "sakit-hsv"),
+        ("sehat-resize", "sehat-hsv"),
+    ]
+    
+    for src, dst in pairs:
         src_full = os.path.join(base_path, src)
         dst_full = os.path.join(base_path, dst)
         if not os.path.isdir(src_full):

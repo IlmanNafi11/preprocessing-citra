@@ -10,17 +10,17 @@ def main():
         subprocess.run([os.path.join('venv', 'bin', 'pip'), 'install', '-r', 'requirements.txt'])
         venv_python = os.path.join(os.getcwd(), 'venv', 'bin', 'python')
 
-    # Jalankan rename_files.py
     print("Menjalankan rename_files.py...")
     subprocess.run([venv_python, 'rename_files.py'])
 
-    # Jalankan resize_images.py
     print("Menjalankan resize_images.py...")
     subprocess.run([venv_python, 'resize_images.py'])
 
-    # Jalankan convert_to_hsv.py
     print("Menjalankan convert_to_hsv.py...")
     subprocess.run([venv_python, 'convert_to_hsv.py'])
+
+    print("Menjalankan remove_background.py...")
+    subprocess.run([venv_python, 'remove_background.py'])
 
     print("Semua proses selesai.")
 

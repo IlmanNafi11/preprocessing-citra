@@ -97,8 +97,8 @@ def remove_dir(src_dir: str, dst_dir: str):
 def main():
     base_path = "/home/ilmannafi/Documents/project-pbl/resize-citra"
     pairs = [
-        ("sakit-resize", "sakit-bg-remove"),
-        ("sehat-resize", "sehat-bg-remove"),
+        ("sakit-augmentation", "sakit-bg-remove"),
+        ("sehat-augmentation", "sehat-bg-remove"),
     ]
     
     for src, dst in pairs:

@@ -52,8 +52,8 @@ def convert_dir(src_dir: str, dst_dir: str):
 def main():
     base_path = "/home/ilmannafi/Documents/project-pbl/resize-citra"
     pairs = [
-        ("sakit-resize", "sakit-hsv"),
-        ("sehat-resize", "sehat-hsv"),
+        ("sakit-augmentation", "sakit-hsv"),
+        ("sehat-augmentation", "sehat-hsv"),
     ]
     
     for src, dst in pairs:

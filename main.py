@@ -16,6 +16,9 @@ def main():
     print("Menjalankan resize_images.py...")
     subprocess.run([venv_python, 'resize_images.py'])
 
+    print("Menjalankan augment_images.py...")
+    subprocess.run([venv_python, 'augment_images.py'])
+
     print("Menjalankan convert_to_hsv.py...")
     subprocess.run([venv_python, 'convert_to_hsv.py'])
 
